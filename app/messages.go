@@ -19,6 +19,12 @@ type Message struct {
 	Payload     Payload     `json:"payload"`
 }
 
+type Payload interface{}
+
+type GetMarktesPayload struct {
+	Market *Market `json:"market"`
+}
+
 func (m *Message) UnmarshalJSON(b []byte) error {
 	message := map[string]interface{}{}
 
@@ -38,6 +44,6 @@ func (m *Message) String() string {
 }
 
 type GetMarketsMessage struct {
-	MessageType MessageType  `json:"messageType"`
-	Payload     OrderPayload `json:"payload"`
+	MessageType MessageType       `json:"messageType"`
+	Payload     GetMarktesPayload `json:"payload"`
 }

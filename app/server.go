@@ -16,14 +16,12 @@ var upgrader = websocket.Upgrader{
 // Server type handles a mapping of socket structs and the trading engine
 type Server struct {
 	clients map[*Socket]bool
-	engine  *TradingEngine
 }
 
 // NewServer returns a a new empty Server instance
 func NewServer() *Server {
 	return &Server{
 		clients: make(map[*Socket]bool),
-		engine:  nil,
 	}
 }
 
@@ -44,24 +42,6 @@ func (s *Server) Start() {
 	err := http.ListenAndServe(*addr, nil)
 	if err != nil {
 		log.Fatal(err)
-	}
-}
-
-// Setup registers a list of quote tokens and token pairs
-func (s *Server) Setup(quoteTokens Tokens, pairs TokenPairs, done chan bool) {
-	fmt.Printf("Starting server ....\n\n\n")
-	s.engine = NewTradingEngine()
-
-	for _, val := range quoteTokens {
-		s.engine.RegisterNewQuoteToken(val)
-	}
-
-	for _, p := range pairs {
-		err := s.engine.RegisterNewPair(p, done)
-		if err != nil {
-			fmt.Printf("Error registering token pair: %v", err)
-		}
-
 	}
 }
 
