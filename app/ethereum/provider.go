@@ -5,8 +5,8 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/ProofSuite/amp-matching-engine/interfaces"
 	"github.com/andyvaulin/prediction-markets/app/app"
+	"github.com/andyvaulin/prediction-markets/app/interfaces"
 	"github.com/ethereum/go-ethereum/common"
 	eth "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"

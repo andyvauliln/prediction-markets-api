@@ -2,12 +2,8 @@ package crons
 
 import (
 	"fmt"
-	"log"
 
-	"github.com/ProofSuite/amp-matching-engine/types"
-	"github.com/ProofSuite/amp-matching-engine/ws"
 	"github.com/andyvaulin/prediction-markets/app/app"
-	"github.com/andyvaulin/prediction-markets/app/utils"
 	"github.com/robfig/cron"
 )
 
@@ -22,23 +18,11 @@ func (s *CronService) tickStreamingCron(c *cron.Cron) {
 	}
 }
 
-// tickStream function fetches latest tick based on unit and duration for each pair
-// and broadcasts the tick to the client subscribed to pair's respective channel
+// tickStream function fetches latest tick based on unit and duration for each Market
+// and broadcasts the tick to the client subscribed to Market's respective channel
 func (s *CronService) tickStream(unit string, duration int64) func() {
 	return func() {
-		p := make([]types.PairSubDoc, 0)
-		ticks, err := s.ohlcvService.GetOHLCV(p, duration, unit)
-		if err != nil {
-			log.Printf("%s", err)
-			return
-		}
 
-		for _, tick := range ticks {
-			baseTokenAddress := tick.ID.BaseToken
-			quoteTokenAddress := tick.ID.QuoteToken
-			id := utils.GetTickChannelID(baseTokenAddress, quoteTokenAddress, unit, duration)
-			ws.GetOHLCVSocket().BroadcastOHLCV(id, tick)
-		}
 	}
 }
 
