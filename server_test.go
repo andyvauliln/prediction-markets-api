@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/andyvaulin/prediction-markets/app"
-	"github.com/andyvaulin/prediction-markets/e2e"
-	"github.com/andyvaulin/prediction-markets/errors"
+	"github.com/andyvauliln/prediction-markets-api/app"
+	"github.com/andyvauliln/prediction-markets-api/e2e"
+	"github.com/andyvauliln/prediction-markets-api/errors"
 )
 
 func TestApp(t *testing.T) {

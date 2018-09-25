@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/andyvaulin/prediction-markets/app"
-	"github.com/andyvaulin/prediction-markets/errors"
+	"github.com/andyvauliln/prediction-markets-api/app"
+	"github.com/andyvauliln/prediction-markets-api/errors"
 	"github.com/spf13/cobra"
 )
 

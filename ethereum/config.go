@@ -1,7 +1,7 @@
 package ethereum
 
 import (
-	"github.com/andyvaulin/prediction-markets/utils"
+	"github.com/andyvauliln/prediction-markets-api/utils"
 	"github.com/ethereum/go-ethereum/common"
 )
 

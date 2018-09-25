@@ -1,7 +1,7 @@
 package crons
 
 import (
-	"github.com/andyvaulin/prediction-markets/services"
+	"github.com/andyvauliln/prediction-markets-api/services"
 	"github.com/robfig/cron"
 )
 

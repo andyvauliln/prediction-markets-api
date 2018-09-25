@@ -6,10 +6,10 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 
-	"github.com/andyvaulin/prediction-markets/interfaces"
-	"github.com/andyvaulin/prediction-markets/services"
-	"github.com/andyvaulin/prediction-markets/types"
-	"github.com/andyvaulin/prediction-markets/utils/httputils"
+	"github.com/andyvauliln/prediction-markets-api/interfaces"
+	"github.com/andyvauliln/prediction-markets-api/services"
+	"github.com/andyvauliln/prediction-markets-api/types"
+	"github.com/andyvauliln/prediction-markets-api/utils/httputils"
 	"github.com/gorilla/mux"
 )
 

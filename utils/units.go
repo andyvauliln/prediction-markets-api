@@ -3,7 +3,7 @@ package utils
 import (
 	"math/big"
 
-	"github.com/andyvaulin/prediction-markets/utils/math"
+	"github.com/andyvauliln/prediction-markets-api/utils/math"
 )
 
 func Ethers(value int64) *big.Int {

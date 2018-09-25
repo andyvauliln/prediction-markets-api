@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/andyvaulin/prediction-markets/app"
+	"github.com/andyvauliln/prediction-markets-api/app"
 )
 
 //var addr = flag.String("addr", "localhost:8080", "http service address")

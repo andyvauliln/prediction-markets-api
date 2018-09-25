@@ -4,7 +4,7 @@ import (
 	"context"
 	"math/big"
 
-	"github.com/andyvaulin/prediction-markets/types"
+	"github.com/andyvauliln/prediction-markets-api/types"
 	ethereum "github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"gopkg.in/mgo.v2/bson"
