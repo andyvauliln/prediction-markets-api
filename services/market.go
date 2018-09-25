@@ -2,6 +2,8 @@ package services
 
 import (
 	"github.com/Proofsuite/amp-matching-engine/interfaces"
+	"github.com/andyvauliln/amp-matching-engine/utils"
+	"github.com/ethereum/go-ethereum/common"
 
 	"gopkg.in/mgo.v2/bson"
 
@@ -51,4 +53,43 @@ func (s *MarketService) GetByID(id bson.ObjectId) (*types.Market, error) {
 // GetAll is reponsible for fetching all the markets in the DB
 func (s *MarketService) GetAll() ([]types.Market, error) {
 	return s.marketDao.GetAll()
+}
+
+// GetTrades is currently not implemented correctly
+func (s *TradeService) GetMarkets(bt, qt common.Address) ([]types.Trade, error) {
+	return s.tradeDao.GetAll()
+}
+
+// Subscribe
+func (s *MarketService) Subscribe(conn *ws.Conn, bt, qt common.Address) {
+	socket := ws.GetMarketSocket()
+
+	markets, err := s.GetMarkets(bt, qt)
+	if err != nil {
+		socket.SendErrorMessage(conn, err.Error())
+		return
+	}
+
+	id := utils.GetTradeChannelID(bt, qt)
+	err = socket.Subscribe(id, conn)
+	if err != nil {
+		message := map[string]string{
+			"Code":    "UNABLE_TO_REGISTER",
+			"Message": "UNABLE_TO_REGISTER " + err.Error(),
+		}
+
+		socket.SendErrorMessage(conn, message)
+		return
+	}
+
+	ws.RegisterConnectionUnsubscribeHandler(conn, socket.UnsubscribeHandler(id))
+	socket.SendInitMessage(conn, markets)
+}
+
+// Unsubscribe
+func (s *MarketService) Unsubscribe(conn *ws.Conn, bt, qt common.Address) {
+	socket := ws.GetTradeSocket()
+
+	id := utils.GetTradeChannelID(bt, qt)
+	socket.Unsubscribe(id, conn)
 }

@@ -3,7 +3,7 @@ package crons
 import (
 	"fmt"
 
-	"github.com/andyvauliln/prediction-markets-api/app/app"
+	"github.com/andyvauliln/prediction-markets-api/app"
 	"github.com/robfig/cron"
 )
 
