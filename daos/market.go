@@ -19,8 +19,10 @@ type MarketDao struct {
 	dbName         string
 }
 
+// Market dao options
 type MarketDaoOption = func(*MarketDao) error
 
+// Market Dao pre-settings
 func MarketDaoDBOption(dbName string) func(dao *MarketDao) error {
 	return func(dao *MarketDao) error {
 		dao.dbName = dbName
