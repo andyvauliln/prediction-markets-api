@@ -1,13 +1,13 @@
 package services
 
 import (
-	"github.com/Proofsuite/amp-matching-engine/interfaces"
+	"github.com/andyvauliln/amp-matching-engine/interfaces"
 	"github.com/andyvauliln/amp-matching-engine/utils"
 	"github.com/ethereum/go-ethereum/common"
 
 	"gopkg.in/mgo.v2/bson"
 
-	"github.com/Proofsuite/amp-matching-engine/types"
+	"github.com/andyvauliln/amp-matching-engine/types"
 )
 
 // MarketService struct with daos required, responsible for communicating with daos.

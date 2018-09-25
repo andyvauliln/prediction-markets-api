@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/ProofSuite/amp-matching-engine/cmd"
+	"github.com/andyvauliln/amp-matching-engine/cmd"
 	"github.com/andyvauliln/prediction-markets-api/app"
 	"github.com/andyvauliln/prediction-markets-api/daos"
 	"github.com/andyvauliln/prediction-markets-api/endpoints"
