@@ -9,6 +9,7 @@ import (
 	"github.com/andyvauliln/prediction-markets-api/endpoints"
 	"github.com/andyvauliln/prediction-markets-api/ethereum"
 	"github.com/andyvauliln/prediction-markets-api/services"
+	"github.com/andyvauliln/prediction-markets-api/utils"
 	"github.com/andyvauliln/prediction-markets-api/ws"
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/gorilla/mux"
@@ -49,7 +50,7 @@ func run(cmd *cobra.Command, args []string) {
 func NewRouter(provider *ethereum.EthereumProvider) *mux.Router {
 
 	r := mux.NewRouter()
-	log.Info(provider)
+	utils.Use(provider)
 	// get daos for dependency injection
 	marketDao := daos.NewMarketDao()
 

@@ -23,7 +23,6 @@ type WebSocketMessage struct {
 
 type WebSocketPayload struct {
 	Type string      `json:"type"`
-	Hash string      `json:"hash,omitempty"`
 	Data interface{} `json:"data"`
 }
 
@@ -47,7 +46,6 @@ func NewMarketWebsocketMessage(m *Market) *WebSocketMessage {
 		Channel: "markets",
 		Payload: WebSocketPayload{
 			Type: "NEW_MARKET",
-			Hash: m.MarketID.Hex(),
 			Data: m,
 		},
 	}

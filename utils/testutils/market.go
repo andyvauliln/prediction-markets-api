@@ -28,7 +28,7 @@ func GetMockMarket() *types.Market {
 		MarketCreatorMailbox:      common.HexToAddress("0x5acf8f0dcf807dcff537d7c034e020eafea533b7"),
 		MarketCreatorMailboxOwner: common.HexToAddress("0x5acf8f0dcf807dcff537d7c034e020eafea533b7"),
 		InitialReportSize:         0,
-		Category:                  types.Category{ Name: "Money", Popularity: 2},
+		Category:                  types.Category{Name: "Money", Popularity: 2},
 		Volume:                    0.015,
 		Tags:                      []string{"Antarctica", "Warming"},
 		OpenInterest:              0.012,
@@ -52,7 +52,7 @@ func GetMockMarket() *types.Market {
 		TickSize:                  0.0001,
 		DisputeRounds:             0,
 		Consensus: types.NormalizedPayout{
-			IsInvalid: bool,
+			IsInvalid: false,
 			Payout:    []int{1, 23, 14},
 		},
 		Outcomes: []types.OutcomeInfo{
@@ -61,7 +61,7 @@ func GetMockMarket() *types.Market {
 				Volume:      0.123,
 				Price:       3.123,
 				Description: "test description",
-			}, 
+			},
 			{
 				ID:          3,
 				Volume:      0.113,

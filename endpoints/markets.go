@@ -9,9 +9,13 @@ import (
 	"github.com/andyvauliln/prediction-markets-api/interfaces"
 	"github.com/andyvauliln/prediction-markets-api/services"
 	"github.com/andyvauliln/prediction-markets-api/types"
+	"github.com/andyvauliln/prediction-markets-api/utils"
 	"github.com/andyvauliln/prediction-markets-api/utils/httputils"
+
 	"github.com/gorilla/mux"
 )
+
+var logger = utils.Logger
 
 type marketEndpoint struct {
 	marketService interfaces.MarketService
@@ -55,7 +59,7 @@ func (e *marketEndpoint) HandleCreateMarket(w http.ResponseWriter, r *http.Reque
 		case services.ErrMarketNotFound:
 			httputils.WriteError(w, http.StatusBadRequest, "Market not found")
 			return
-		case services.ErrmarketInvalid:
+		case services.ErrMarketInvalid:
 			httputils.WriteError(w, http.StatusBadRequest, "Market invalid")
 			return
 		default:
@@ -89,7 +93,6 @@ func (e *marketEndpoint) HandleGetMarket(w http.ResponseWriter, r *http.Request)
 	}
 
 	MarketIDHex := common.HexToAddress(MarketID)
-	quoteTokenAddress := common.HexToAddress(quoteToken)
 	res, err := e.marketService.GetByMarketAddress(MarketIDHex)
 	if err != nil {
 		logger.Error(err)

@@ -36,6 +36,6 @@ func NewMockServices() *MockServices {
 
 func NewMockDaos() *MockDaos {
 	return &MockDaos{
-		MockDaos: new(mocks.MockDaos),
+		MarketDao: new(mocks.MarketDao),
 	}
 }

@@ -15,13 +15,14 @@ type MarketService interface {
 	Create(market *types.Market) error
 	GetByID(id bson.ObjectId) (*types.Market, error)
 	GetAll() ([]types.Market, error)
+	GetByMarketAddress(marketId common.Address) (*types.Market, error)
 }
 
 type MarketDao interface {
 	Create(o *types.Market) error
 	GetAll() ([]types.Market, error)
 	GetByID(id bson.ObjectId) (*types.Market, error)
-	GetByMarketAddress(baseToken, quoteToken common.Address) (*types.Market, error)
+	GetByMarketAddress(marketID common.Address) (*types.Market, error)
 }
 
 type EthereumService interface {

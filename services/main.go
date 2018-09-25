@@ -11,3 +11,5 @@ var logger = utils.Logger
 var ErrMarketNotFound = errors.New("Market not found")
 
 var ErrMarketExists = errors.New("Market Exists")
+
+var ErrMarketInvalid = errors.New("Market Invalid")

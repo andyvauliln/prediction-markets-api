@@ -167,10 +167,6 @@ func SendMessage(conn *Conn, channel string, msgType string, data interface{}, h
 		Data: data,
 	}
 
-	if len(hash) > 0 {
-		payload.Hash = hash[0].Hex()
-	}
-
 	message := types.WebSocketMessage{
 		Channel: channel,
 		Payload: payload,

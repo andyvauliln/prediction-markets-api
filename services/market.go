@@ -61,6 +61,11 @@ func (s *MarketService) GetMarkets(bt, qt common.Address) ([]types.Market, error
 	return s.marketDao.GetAll()
 }
 
+// GetByAddress fetches the detailed document of a token using its contract address
+func (s *MarketService) GetByMarketAddress(marketID common.Address) (*types.Market, error) {
+	return s.marketDao.GetByMarketAddress(marketID)
+}
+
 // Subscribe
 func (s *MarketService) Subscribe(conn *ws.Conn, bt, qt common.Address) {
 	socket := ws.GetMarketSocket()
@@ -71,7 +76,7 @@ func (s *MarketService) Subscribe(conn *ws.Conn, bt, qt common.Address) {
 		return
 	}
 
-	id := utils.GetTradeChannelID(bt, qt)
+	id := utils.GetMarketChannelID(bt, qt)
 	err = socket.Subscribe(id, conn)
 	if err != nil {
 		message := map[string]string{
@@ -89,8 +94,8 @@ func (s *MarketService) Subscribe(conn *ws.Conn, bt, qt common.Address) {
 
 // Unsubscribe
 func (s *MarketService) Unsubscribe(conn *ws.Conn, bt, qt common.Address) {
-	socket := ws.GetTradeSocket()
+	socket := ws.GetMarketSocket()
 
-	id := utils.GetTradeChannelID(bt, qt)
+	id := utils.GetMarketChannelID(bt, qt)
 	socket.Unsubscribe(id, conn)
 }
