@@ -4,7 +4,6 @@ import (
 	"context"
 	"math/big"
 
-	"github.com/ProofSuite/amp-matching-engine/ws"
 	"github.com/andyvaulin/prediction-markets/types"
 	ethereum "github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
@@ -12,9 +11,8 @@ import (
 )
 
 type MarketService interface {
-	Create(pair *types.Market) error
+	Create(market *types.Market) error
 	GetByID(id bson.ObjectId) (*types.Market, error)
-	GetByTokenAddress(bt, qt common.Address) (*types.Market, error)
 	GetAll() ([]types.Market, error)
 }
 
@@ -24,12 +22,6 @@ type MarketDao interface {
 	GetByID(id bson.ObjectId) (*types.Market, error)
 	GetByMarketAddress(baseToken, quoteToken common.Address) (*types.Market, error)
 	GetByBuySellTokenAddress(buyToken, sellToken common.Market) (*types.Market, error)
-}
-
-type OHLCVService interface {
-	Unsubscribe(conn *ws.Conn, bt, qt common.Address, p *types.Params)
-	Subscribe(conn *ws.Conn, bt, qt common.Address, p *types.Params)
-	GetOHLCV(p []types.PairSubDoc, duration int64, unit string, timeInterval ...int64) ([]*types.Tick, error)
 }
 
 type EthereumService interface {
@@ -56,4 +48,11 @@ type EthereumClient interface {
 	FilterLogs(ctx context.Context, query ethereum.FilterQuery) ([]eth.Log, error)
 	SubscribeFilterLogs(ctx context.Context, query ethereum.FilterQuery, ch chan<- eth.Log) (ethereum.Subscription, error)
 	SuggestGasPrice(ctx context.Context) (*big.Int, error)
+}
+
+type EthereumProvider interface {
+	WaitMined(hash common.Hash) (*eth.Receipt, error)
+	GetBalanceAt(a common.Address) (*big.Int, error)
+	GetPendingNonceAt(a common.Address) (uint64, error)
+	BalanceOf(owner common.Address, token common.Address) (*big.Int, error)
 }
