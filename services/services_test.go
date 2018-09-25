@@ -3,7 +3,7 @@ package services
 import (
 	"io/ioutil"
 
-	"github.com/andyvauliln/amp-matching-engine/daos"
+	"github.com/andyvauliln/prediction-markets-api/daos"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/dbtest"
 )

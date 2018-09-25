@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/andyvauliln/amp-matching-engine/types"
-	"github.com/andyvauliln/amp-matching-engine/utils"
+	"github.com/andyvauliln/prediction-markets-api/types"
+	"github.com/andyvauliln/prediction-markets-api/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/gorilla/websocket"
 )

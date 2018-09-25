@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/andyvauliln/amp-matching-engine/cmd"
 	"github.com/andyvauliln/prediction-markets-api/app"
+	"github.com/andyvauliln/prediction-markets-api/cmd"
 	"github.com/andyvauliln/prediction-markets-api/daos"
 	"github.com/andyvauliln/prediction-markets-api/endpoints"
 	"github.com/andyvauliln/prediction-markets-api/ethereum"

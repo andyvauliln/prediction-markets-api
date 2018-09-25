@@ -4,8 +4,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/andyvauliln/amp-matching-engine/app"
-	"github.com/andyvauliln/amp-matching-engine/types"
+	"github.com/andyvauliln/prediction-markets-api/app"
+	"github.com/andyvauliln/prediction-markets-api/types"
 	"github.com/ethereum/go-ethereum/common"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"

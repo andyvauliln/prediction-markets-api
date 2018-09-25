@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/andyvauliln/amp-matching-engine/types"
-	"github.com/andyvauliln/amp-matching-engine/utils/testutils"
+	"github.com/andyvauliln/prediction-markets-api/utils/testutils"
 	"github.com/ethereum/go-ethereum/common"
 	"gopkg.in/mgo.v2/bson"
 )

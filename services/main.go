@@ -3,7 +3,7 @@ package services
 import (
 	"errors"
 
-	"github.com/andyvauliln/amp-matching-engine/utils"
+	"github.com/andyvauliln/prediction-markets-api/utils"
 )
 
 var logger = utils.Logger
