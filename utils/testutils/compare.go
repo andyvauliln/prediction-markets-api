@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/Proofsuite/amp-matching-engine/types"
+	"github.com/andyvauliln/prediction-markets-api/types"
 	"github.com/go-test/deep"
-	"github.com/stretchr/testify/assert" 
+	"github.com/stretchr/testify/assert"
 	"gopkg.in/mgo.v2/dbtest"
 )
 

@@ -1,12 +1,13 @@
 package testutils
 
 import (
-	"github.com/Proofsuite/amp-matching-engine/types"
+	"github.com/andyvauliln/prediction-markets-api/types"
 	"github.com/ethereum/go-ethereum/common"
 	"gopkg.in/mgo.v2/bson"
 )
 
 func GetMockMarket() *types.Market {
+
 	return &types.Market{
 		ID:                        bson.NewObjectId(),
 		MarketID:                  common.HexToAddress("0x9ad256e6681a7b3c7df29dac0c27f5b4c1d84ae7"),
@@ -26,8 +27,8 @@ func GetMockMarket() *types.Market {
 		MarketCreatorFeesBalance:  0,
 		MarketCreatorMailbox:      common.HexToAddress("0x5acf8f0dcf807dcff537d7c034e020eafea533b7"),
 		MarketCreatorMailboxOwner: common.HexToAddress("0x5acf8f0dcf807dcff537d7c034e020eafea533b7"),
-		InitialReportSize:         nil,
-		Category:                  "climate",
+		InitialReportSize:         0,
+		Category:                  types.Category{ Name: "Money", Popularity: 2},
 		Volume:                    0.015,
 		Tags:                      []string{"Antarctica", "Warming"},
 		OpenInterest:              0.012,
@@ -50,20 +51,23 @@ func GetMockMarket() *types.Market {
 		NumTicks:                  10000,
 		TickSize:                  0.0001,
 		DisputeRounds:             0,
-		Consensus: NormalizedPayout{
-			IsInvalid: 1,
+		Consensus: types.NormalizedPayout{
+			IsInvalid: bool,
 			Payout:    []int{1, 23, 14},
 		},
-		Outcomes: []OutcomeInfo{{
-			Id:          4,
-			Volume:      0.123,
-			Price:       3.123,
-			Description: "test description",
-		}, {
-			Id:          3,
-			Volume:      0.113,
-			Price:       3.1213,
-			Description: "test description",
-		}},
+		Outcomes: []types.OutcomeInfo{
+			{
+				ID:          4,
+				Volume:      0.123,
+				Price:       3.123,
+				Description: "test description",
+			}, 
+			{
+				ID:          3,
+				Volume:      0.113,
+				Price:       3.1213,
+				Description: "test description",
+			},
+		},
 	}
 }
