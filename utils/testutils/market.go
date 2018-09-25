@@ -1,27 +1,13 @@
-package daos
+package testutils
 
 import (
-	"io/ioutil"
-	"testing"
-
-	"github.com/andyvauliln/amp-matching-engine/types"
-	"github.com/andyvauliln/prediction-markets-api/utils/testutils"
+	"github.com/Proofsuite/amp-matching-engine/types"
 	"github.com/ethereum/go-ethereum/common"
 	"gopkg.in/mgo.v2/bson"
 )
 
-func init() {
-	temp, _ := ioutil.TempDir("", "test")
-	server.SetPath(temp)
-
-	session := server.Session()
-	db = &Database{session}
-}
-
-func TestMarketDao(t *testing.T) {
-	dao := NewMarketDao()
-
-	market := &types.Market{
+func GetMockMarket() *types.Market {
+	return &types.Market{
 		ID:                        bson.NewObjectId(),
 		MarketID:                  common.HexToAddress("0x9ad256e6681a7b3c7df29dac0c27f5b4c1d84ae7"),
 		Universe:                  common.HexToAddress("0x02149d40d255fceac54a3ee3899807b0539bad60"),
@@ -80,24 +66,4 @@ func TestMarketDao(t *testing.T) {
 			Description: "test description",
 		}},
 	}
-
-	err := dao.Create(market)
-	if err != nil {
-		t.Errorf("Could not create market object: %+v", err)
-	}
-
-	all, err := dao.GetAll()
-	if err != nil {
-		t.Errorf("Could not get markets: %+v", err)
-	}
-
-	testutils.CompareMarket(t, market, &all[0])
-
-	byID, err := dao.GetByID(market.ID)
-	if err != nil {
-		t.Errorf("Could not get market by ID: %v", err)
-	}
-
-	testutils.CompareMarket(t, market, byID)
-
 }

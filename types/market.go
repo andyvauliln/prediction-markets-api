@@ -1,14 +1,16 @@
-package app
+package types
 
 import (
 	"encoding/json"
-	"math/big"
 	"time"
 
+	"github.com/Proofsuite/amp-matching-engine/utils"
 	. "github.com/ethereum/go-ethereum/common"
 	validation "github.com/go-ozzo/ozzo-validation"
 	"gopkg.in/mgo.v2/bson"
 )
+
+var logger = utils.Logger
 
 type ReportingState int
 
@@ -34,7 +36,7 @@ const (
 )
 
 type NormalizedPayout struct {
-	Id     string  `json:"id,omitempty"`     //  Market Outcome ID
+	ID     string  `json:"id,omitempty"`     //  Market Outcome ID
 	Volume float32 `json:"volume,omitempty"` // Trading volume for this Outcome.
 	Price  float32 `json:"price,omitempty"`
 	// Last price at which the outcome was traded. If no trades have taken place in
@@ -56,7 +58,7 @@ type Category struct {
 
 type Market struct {
 	ID                        bson.ObjectId    `json:"id" bson:"_id"`
-	MarketId                  Address          `json:"marketId,omitempty"`                  // Address of a Market, as a hexadecimal string.
+	MarketID                  Address          `json:"MarketID,omitempty"`                  // Address of a Market, as a hexadecimal string.
 	Universe                  Address          `json:"universe,omitempty"`                  // Address of a Universe, as a hexadecimal string
 	MarketType                string           `json:"marketType,omitempty"`                // Type of Market (“yesNo”, “categorical”, or “scalar”).
 	NumOutcomes               int16            `json:"numOutcomes,omitempty"`               // Total possible Outcomes for the Market.
@@ -106,7 +108,7 @@ type Market struct {
 // TokenRecord is the struct which is stored in db
 type MarketRecord struct {
 	ID                        bson.ObjectId    `json:"id" bson:"_id"`
-	MarketId                  Address          `json:"marketId,omitempty"`                  // Address of a Market, as a hexadecimal string.
+	MarketID                  Address          `json:"MarketID,omitempty"`                  // Address of a Market, as a hexadecimal string.
 	Universe                  Address          `json:"universe,omitempty"`                  // Address of a Universe, as a hexadecimal string
 	MarketType                string           `json:"marketType,omitempty"`                // Type of Market (“yesNo”, “categorical”, or “scalar”).
 	NumOutcomes               int16            `json:"numOutcomes,omitempty"`               // Total possible Outcomes for the Market.
@@ -172,7 +174,7 @@ func (m *Market) GetBSON() (interface{}, error) {
 // struct satisfies all the conditions for a valid instance
 func (m Market) Validate() error {
 	return validation.ValidateStruct(&m,
-		validation.Field(&m.MarketId, validation.Required)
+		validation.Field(&m.MarketID, validation.Required),
 	)
 }
 

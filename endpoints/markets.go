@@ -82,15 +82,15 @@ func (e *marketEndpoint) HandleGetAllMarkets(w http.ResponseWriter, r *http.Requ
 func (e *marketEndpoint) HandleGetMarket(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	marketId := vars["id"]
+	MarketID := vars["id"]
 
-	if !common.IsHexAddress(marketId) {
+	if !common.IsHexAddress(MarketID) {
 		httputils.WriteError(w, http.StatusBadRequest, "Invalid Address")
 	}
 
-	marketIdHex := common.HexToAddress(marketId)
+	MarketIDHex := common.HexToAddress(MarketID)
 	quoteTokenAddress := common.HexToAddress(quoteToken)
-	res, err := e.marketService.GetByMarketAddress(marketIdHex)
+	res, err := e.marketService.GetByMarketAddress(MarketIDHex)
 	if err != nil {
 		logger.Error(err)
 		httputils.WriteError(w, http.StatusInternalServerError, "")

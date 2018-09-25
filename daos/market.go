@@ -44,7 +44,7 @@ func NewMarketDao(options ...MarketDaoOption) *MarketDao {
 	}
 
 	index := mgo.Index{
-		Key:    []string{"marketId"},
+		Key:    []string{"MarketID"},
 		Unique: true,
 	}
 
@@ -82,11 +82,11 @@ func (dao *MarketDao) GetByID(id bson.ObjectId) (*types.Market, error) {
 
 // GetByTokenAddress function fetches Market based on
 // CONTRACT ADDRESS of base token and quote token
-func (dao *MarketDao) GetByMarketAddress(marketId, common.Address) (*types.Market, error) {
+func (dao *MarketDao) GetByMarketAddress(MarketID, common.Address) (*types.Market, error) {
 	var res []*types.Market
 
 	q := bson.M{
-		"marketId": baseToken.Hex(),
+		"MarketID": baseToken.Hex(),
 	}
 
 	err := db.Get(dao.dbName, dao.collectionName, q, 0, 1, &res)

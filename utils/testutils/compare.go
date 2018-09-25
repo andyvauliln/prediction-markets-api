@@ -1,12 +1,16 @@
-package types
+package testutils
 
 import (
+	"encoding/json"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/Proofsuite/amp-matching-engine/types"
+	"github.com/go-test/deep"
+	"github.com/stretchr/testify/assert" 
+	"gopkg.in/mgo.v2/dbtest"
 )
 
-func Comparemarket(t *testing.T, a, b *Market) {
+func CompareOrder(t *testing.T, a, b *types.Market) {
 	assert.Equal(t, a.ID, b.ID)
 	assert.Equal(t, a.MarketID, b.MarketID)
 	assert.Equal(t, a.Universe, b.Universe)
@@ -51,4 +55,23 @@ func Comparemarket(t *testing.T, a, b *Market) {
 	assert.Equal(t, a.DisputeRounds, b.DisputeRounds)
 	assert.Equal(t, a.Consensus, b.Consensus)
 	assert.Equal(t, a.Outcomes, b.Outcomes)
+
+}
+
+func Compare(t *testing.T, expected interface{}, value interface{}) {
+	expectedBytes, _ := json.Marshal(expected)
+	bytes, _ := json.Marshal(value)
+
+	assert.JSONEqf(t, string(expectedBytes), string(bytes), "")
+}
+
+func CompareStructs(t *testing.T, expected interface{}, order interface{}) {
+	diff := deep.Equal(expected, order)
+	if diff != nil {
+		t.Errorf("\n%+v\nGot: \n%+v\n\n", expected, order)
+	}
+}
+
+func NewDBTestServer() *dbtest.DBServer {
+	return &dbtest.DBServer{}
 }
