@@ -57,7 +57,7 @@ func NewMarketDao(options ...MarketDaoOption) *MarketDao {
 }
 
 // Create function performs the DB insertion task for Market collection
-func (dao *MarketDao) Create(Market *types.Market) error {
+func (dao *MarketDao) Create(market *types.Market) error {
 	market.ID = bson.NewObjectId()
 	market.CreatedAt = time.Now()
 	market.UpdatedAt = time.Now()
@@ -82,11 +82,11 @@ func (dao *MarketDao) GetByID(id bson.ObjectId) (*types.Market, error) {
 
 // GetByTokenAddress function fetches Market based on
 // CONTRACT ADDRESS of base token and quote token
-func (dao *MarketDao) GetByMarketAddress(MarketID, common.Address) (*types.Market, error) {
+func (dao *MarketDao) GetByMarketAddress(marketID common.Address) (*types.Market, error) {
 	var res []*types.Market
 
 	q := bson.M{
-		"MarketID": baseToken.Hex(),
+		"marketID": marketID.Hex(),
 	}
 
 	err := db.Get(dao.dbName, dao.collectionName, q, 0, 1, &res)

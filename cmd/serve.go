@@ -1,11 +1,10 @@
-package main
+package cmd
 
 import (
 	"fmt"
 	"net/http"
 
 	"github.com/andyvauliln/prediction-markets-api/app"
-	"github.com/andyvauliln/prediction-markets-api/cmd"
 	"github.com/andyvauliln/prediction-markets-api/daos"
 	"github.com/andyvauliln/prediction-markets-api/endpoints"
 	"github.com/andyvauliln/prediction-markets-api/ethereum"
@@ -26,10 +25,6 @@ var serveCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(serveCmd)
-}
-
-func main() {
-	cmd.Execute()
 }
 
 func run(cmd *cobra.Command, args []string) {

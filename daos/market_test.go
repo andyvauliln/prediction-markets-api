@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/andyvauliln/amp-matching-engine/types"
+	"github.com/andyvauliln/prediction-markets-api/types"
 	"github.com/andyvauliln/prediction-markets-api/utils/testutils"
 	"github.com/ethereum/go-ethereum/common"
 	"gopkg.in/mgo.v2/bson"
@@ -69,12 +69,12 @@ func TestMarketDao(t *testing.T) {
 			Payout:    []int{1, 23, 14},
 		},
 		Outcomes: []OutcomeInfo{{
-			Id:          4,
+			ID:          4,
 			Volume:      0.123,
 			Price:       3.123,
 			Description: "test description",
 		}, {
-			Id:          3,
+			ID:          3,
 			Volume:      0.113,
 			Price:       3.1213,
 			Description: "test description",

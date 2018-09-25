@@ -7,6 +7,7 @@ import (
 	"github.com/andyvauliln/prediction-markets-api/types"
 	ethereum "github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
+	eth "github.com/ethereum/go-ethereum/core/types"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -21,7 +22,6 @@ type MarketDao interface {
 	GetAll() ([]types.Market, error)
 	GetByID(id bson.ObjectId) (*types.Market, error)
 	GetByMarketAddress(baseToken, quoteToken common.Address) (*types.Market, error)
-	GetByBuySellTokenAddress(buyToken, sellToken common.Market) (*types.Market, error)
 }
 
 type EthereumService interface {

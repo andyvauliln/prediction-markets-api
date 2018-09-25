@@ -5,8 +5,8 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/andyvauliln/prediction-markets-api/app/app"
-	"github.com/andyvauliln/prediction-markets-api/app/interfaces"
+	"github.com/andyvauliln/prediction-markets-api/app"
+	"github.com/andyvauliln/prediction-markets-api/interfaces"
 	"github.com/ethereum/go-ethereum/common"
 	eth "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -37,7 +37,7 @@ func NewDefaultEthereumProvider() *EthereumProvider {
 	}
 
 	client := ethclient.NewClient(conn)
-	config := NewEthereumConfig(url, exchange, weth)
+	config := NewEthereumConfig(url)
 
 	return &EthereumProvider{
 		Client: client,

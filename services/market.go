@@ -3,6 +3,7 @@ package services
 import (
 	"github.com/andyvauliln/prediction-markets-api/interfaces"
 	"github.com/andyvauliln/prediction-markets-api/utils"
+	"github.com/andyvauliln/prediction-markets-api/ws"
 	"github.com/ethereum/go-ethereum/common"
 
 	"gopkg.in/mgo.v2/bson"
@@ -28,7 +29,7 @@ func NewMarketService(
 // Create function is responsible for inserting new market in DB.
 // It checks for existence of market in DB first
 func (s *MarketService) Create(market *types.Market) error {
-	p, err := s.marketDao.GetByID(market.Id)
+	p, err := s.marketDao.GetByID(market.ID)
 	if err != nil {
 		return err
 	}
@@ -56,8 +57,8 @@ func (s *MarketService) GetAll() ([]types.Market, error) {
 }
 
 // GetTrades is currently not implemented correctly
-func (s *TradeService) GetMarkets(bt, qt common.Address) ([]types.Trade, error) {
-	return s.tradeDao.GetAll()
+func (s *MarketService) GetMarkets(bt, qt common.Address) ([]types.Market, error) {
+	return s.marketDao.GetAll()
 }
 
 // Subscribe

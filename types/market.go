@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/Proofsuite/amp-matching-engine/utils"
+	"github.com/andyvauliln/prediction-markets-api/utils"
 	. "github.com/ethereum/go-ethereum/common"
 	validation "github.com/go-ozzo/ozzo-validation"
 	"gopkg.in/mgo.v2/bson"
@@ -35,8 +35,8 @@ const (
 	SCALAR
 )
 
-type NormalizedPayout struct {
-	ID     string  `json:"id,omitempty"`     //  Market Outcome ID
+type OutcomeInfo struct {
+	ID     int     `json:"id,omitempty"`     //  Market Outcome ID
 	Volume float32 `json:"volume,omitempty"` // Trading volume for this Outcome.
 	Price  float32 `json:"price,omitempty"`
 	// Last price at which the outcome was traded. If no trades have taken place in
@@ -46,7 +46,7 @@ type NormalizedPayout struct {
 	Description string `json:"Description,omitempty"` // Description for the Outcome.
 }
 
-type OutcomeInfo struct {
+type NormalizedPayout struct {
 	IsInvalid bool  `json:"isInvalid,omitempty"` // Whether the Outcome is Invalid.
 	Payout    []int `json:"payout,omitempty"`    // Payout Set for the Dispute Crowdsourcer.
 }

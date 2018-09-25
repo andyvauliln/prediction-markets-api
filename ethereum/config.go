@@ -13,11 +13,9 @@ type EthereumConfig struct {
 	wethAddress     common.Address
 }
 
-func NewEthereumConfig(url string, exchange, weth common.Address) *EthereumConfig {
+func NewEthereumConfig(url string) *EthereumConfig {
 	return &EthereumConfig{
-		url:             url,
-		exchangeAddress: exchange,
-		wethAddress:     weth,
+		url: url,
 	}
 }
 
