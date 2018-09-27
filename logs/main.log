@@ -1,0 +1,4 @@
+ERRO 09:19:41 at endpoints/markets.go:78 in HandleGetAllMarkets():reflect.Set: value of type []uint8 is not assignable to type common.Address
+ERRO 09:19:41 at endpoints/markets.go:78 in HandleGetAllMarkets():reflect.Set: value of type []uint8 is not assignable to type common.Address
+ERRO 09:32:24 at endpoints/markets.go:78 in HandleGetAllMarkets():reflect.Set: value of type []uint8 is not assignable to type common.Address
+ERRO 09:32:24 at endpoints/markets.go:78 in HandleGetAllMarkets():reflect.Set: value of type []uint8 is not assignable to type common.Address

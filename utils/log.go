@@ -10,8 +10,9 @@ import (
 )
 
 var Logger = NewLogger("main", "./logs/main.log")
-var APILogger = NewLogger("api", "./logs/api.log")
-var TerminalLogger = NewColoredLogger()
+
+//var APILogger = NewLogger("api", "./logs/api.log")
+//var TerminalLogger = NewColoredLogger()
 
 func NewLogger(module string, logFile string) *logging.Logger {
 	_, fileName, _, _ := runtime.Caller(1)
@@ -22,7 +23,10 @@ func NewLogger(module string, logFile string) *logging.Logger {
 	if err != nil {
 		panic(err)
 	}
-
+	inputFmt := logFile[len(logFile)-20:]
+	inputFmt2 := mainLogFile[len(mainLogFile)-20:]
+	inputFmt = inputFmt2
+	inputFmt2 = inputFmt
 	var format = logging.MustStringFormatter(
 		`%{level:.4s} %{time:15:04:05} at %{shortpkg}/%{shortfile} in %{shortfunc}():%{message}`,
 	)

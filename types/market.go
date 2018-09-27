@@ -58,7 +58,7 @@ type Category struct {
 
 type Market struct {
 	ID                        bson.ObjectId    `json:"id" bson:"_id"`
-	MarketID                  Address          `json:"MarketID,omitempty"`                  // Address of a Market, as a hexadecimal string.
+	MarketID                  Address          `json:"marketID,omitempty"`                  // Address of a Market, as a hexadecimal string.
 	Universe                  Address          `json:"universe,omitempty"`                  // Address of a Universe, as a hexadecimal string
 	MarketType                string           `json:"marketType,omitempty"`                // Type of Market (“yesNo”, “categorical”, or “scalar”).
 	NumOutcomes               int16            `json:"numOutcomes,omitempty"`               // Total possible Outcomes for the Market.
@@ -108,7 +108,7 @@ type Market struct {
 // TokenRecord is the struct which is stored in db
 type MarketRecord struct {
 	ID                        bson.ObjectId    `json:"id" bson:"_id"`
-	MarketID                  Address          `json:"MarketID,omitempty"`                  // Address of a Market, as a hexadecimal string.
+	MarketID                  Address          `json:"marketID,omitempty"`                  // Address of a Market, as a hexadecimal string.
 	Universe                  Address          `json:"universe,omitempty"`                  // Address of a Universe, as a hexadecimal string
 	MarketType                string           `json:"marketType,omitempty"`                // Type of Market (“yesNo”, “categorical”, or “scalar”).
 	NumOutcomes               int16            `json:"numOutcomes,omitempty"`               // Total possible Outcomes for the Market.

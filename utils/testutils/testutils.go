@@ -7,8 +7,6 @@ import (
 	"github.com/andyvauliln/prediction-markets-api/utils/testutils/mocks"
 )
 
-// command for mock mockery -name MarketService -output utils/testutils/mocks/ -dir interfaces/ -case underscore
-
 func Mine(client *ethereum.SimulatedClient) {
 	nextTime := time.Now()
 	nextTime = nextTime.Add(500 * time.Millisecond)

@@ -10,7 +10,7 @@ import (
 	"gopkg.in/mgo.v2/dbtest"
 )
 
-func CompareOrder(t *testing.T, a, b *types.Market) {
+func CompareMarket(t *testing.T, a, b *types.Market) {
 	assert.Equal(t, a.ID, b.ID)
 	assert.Equal(t, a.MarketID, b.MarketID)
 	assert.Equal(t, a.Universe, b.Universe)

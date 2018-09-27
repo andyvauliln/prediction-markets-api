@@ -11,6 +11,7 @@ import (
 )
 
 func init() {
+	server := testutils.NewDBTestServer()
 	temp, _ := ioutil.TempDir("", "test")
 	server.SetPath(temp)
 
@@ -40,8 +41,8 @@ func TestMarketDao(t *testing.T) {
 		MarketCreatorFeesBalance:  0,
 		MarketCreatorMailbox:      common.HexToAddress("0x5acf8f0dcf807dcff537d7c034e020eafea533b7"),
 		MarketCreatorMailboxOwner: common.HexToAddress("0x5acf8f0dcf807dcff537d7c034e020eafea533b7"),
-		InitialReportSize:         nil,
-		Category:                  "climate",
+		InitialReportSize:         13,
+		Category:                  types.Category{Name: "Money", Popularity: 2},
 		Volume:                    0.015,
 		Tags:                      []string{"Antarctica", "Warming"},
 		OpenInterest:              0.012,
@@ -64,21 +65,24 @@ func TestMarketDao(t *testing.T) {
 		NumTicks:                  10000,
 		TickSize:                  0.0001,
 		DisputeRounds:             0,
-		Consensus: NormalizedPayout{
-			IsInvalid: 1,
+		Consensus: types.NormalizedPayout{
+			IsInvalid: false,
 			Payout:    []int{1, 23, 14},
 		},
-		Outcomes: []OutcomeInfo{{
-			ID:          4,
-			Volume:      0.123,
-			Price:       3.123,
-			Description: "test description",
-		}, {
-			ID:          3,
-			Volume:      0.113,
-			Price:       3.1213,
-			Description: "test description",
-		}},
+		Outcomes: []types.OutcomeInfo{
+			{
+				ID:          4,
+				Volume:      0.123,
+				Price:       3.123,
+				Description: "test description",
+			},
+			{
+				ID:          3,
+				Volume:      0.113,
+				Price:       3.1213,
+				Description: "test description",
+			},
+		},
 	}
 
 	err := dao.Create(market)
