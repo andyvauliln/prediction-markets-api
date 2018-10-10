@@ -52,7 +52,7 @@ type NormalizedPayout struct {
 }
 
 type Category struct {
-	Name       string `json:"category, omitempty"`
+	Name       string `json:"name, omitempty"`
 	Popularity int    `json:"popularity, omitempty"`
 }
 
@@ -108,14 +108,14 @@ type Market struct {
 // TokenRecord is the struct which is stored in db
 type MarketRecord struct {
 	ID                        bson.ObjectId    `json:"id" bson:"_id"`
-	MarketID                  Address          `json:"marketID,omitempty"`                  // Address of a Market, as a hexadecimal string.
-	Universe                  Address          `json:"universe,omitempty"`                  // Address of a Universe, as a hexadecimal string
+	MarketID                  string           `json:"marketID,omitempty"`                  // Address of a Market, as a hexadecimal string.
+	Universe                  string           `json:"universe,omitempty"`                  // Address of a Universe, as a hexadecimal string
 	MarketType                string           `json:"marketType,omitempty"`                // Type of Market (“yesNo”, “categorical”, or “scalar”).
 	NumOutcomes               int16            `json:"numOutcomes,omitempty"`               // Total possible Outcomes for the Market.
 	MinPrice                  float32          `json:"minPrice,omitempty"`                  // Minimum price allowed for a share on a Market, in ETH. For Yes/No & Categorical Markets, this is 0 ETH. For Scalar Markets, this is the bottom end of the range set by the Market creator.
 	MaxPrice                  float32          `json:"maxPrice,omitempty"`                  // Maximum price allowed for a share on a Market, in ETH. For Yes/No & Categorical Markets, this is 1 ETH. For Scalar Markets, this is the top end of the range set by the Market creator.
 	CumulativeScale           float32          `json:"cumulativeScale,omitempty"`           // Difference between maxPrice and minPrice.
-	Author                    Address          `json:"author,omitempty"`                    // Ethereum address of the creator of the Market, as a hexadecimal string.
+	Author                    string           `json:"author,omitempty"`                    // Ethereum address of the creator of the Market, as a hexadecimal string.
 	CreationTime              int              `json:"creationTime,omitempty"`              // Timestamp when the Ethereum block containing the Market creation was created, in seconds.
 	CreationBlock             int              `json:"creationBlock,omitempty"`             // Number of the Ethereum block containing the Market creation.
 	CreationFee               float32          `json:"creationFee,omitempty"`               // Fee paid by the Market Creator to create the Market, in ETH.
@@ -123,8 +123,8 @@ type MarketRecord struct {
 	ReportingFeeRate          float32          `json:"reportingFeeRate,omitempty"`          // Percentage rate of ETH sent to the Fee Window containing the Market whenever shares are settled. Reporting Fees are later used to pay REP holders for Reporting on the Outcome of Markets.
 	MarketCreatorFeeRate      float32          `json:"marketCreatorFeeRate,omitempty"`      // Percentage rate of ETH paid to the Market creator whenever shares are settled.
 	MarketCreatorFeesBalance  float32          `json:"marketCreatorFeesBalance,omitempty"`  // Amount of claimable fees the Market creator has not collected from the Market, in ETH.
-	MarketCreatorMailbox      Address          `json:"marketCreatorMailbox,omitempty"`      // Ethereum address of the Market Creator, as a hexadecimal string.
-	MarketCreatorMailboxOwner Address          `json:"marketCreatorMailboxOwner,omitempty"` // Ethereum address of the Market Creator Mailbox, as a hexadecimal string.
+	MarketCreatorMailbox      string           `json:"marketCreatorMailbox,omitempty"`      // Ethereum address of the Market Creator, as a hexadecimal string.
+	MarketCreatorMailboxOwner string           `json:"marketCreatorMailboxOwner,omitempty"` // Ethereum address of the Market Creator Mailbox, as a hexadecimal string.
 	InitialReportSize         int32            `json:"initialReportSize,omitempty"`         // Size of the No-Show Bond (if the Initial Report was submitted by a First Public Reporter instead of the Designated Reporter).
 	Category                  Category         `json:"category,omitempty"`                  // Name of the category the Market is in.
 	Volume                    float32          `json:"volume,omitempty"`                    // Trading volume for this Outcome.
@@ -134,7 +134,7 @@ type MarketRecord struct {
 	ReportingState            string           `json:"reportingState,omitempty"`            // Reporting state name.
 	Forking                   bool             `json:"forking,omitempty"`                   // Whether the Market has Forked.
 	NeedsMigration            bool             `json:"needsMigration,omitempty"`            // Whether the Market needs to be migrated to its
-	FeeWindow                 Address          `json:"feeWindow,omitempty"`                 // Contract address of the Fee Window the Market is in, as a hexadecimal string.
+	FeeWindow                 string           `json:"feeWindow,omitempty"`                 // Contract address of the Fee Window the Market is in, as a hexadecimal string.
 	EndTime                   int              `json:"endTime,omitempty"`                   // Timestamp when the Market event ends, in seconds.
 	FinalizationBlockNumber   int              `json:"finalizationBlockNumber,omitempty"`   // Ethereum block number in which the Market was Finalized.
 	FinalizationTime          int              `json:"finalizationTime,omitempty"`          // Timestamp when the Market was finalized (if any), in seconds.
@@ -143,7 +143,7 @@ type MarketRecord struct {
 	Description               string           `json:"description,omitempty"`               // Description of the Market.
 	Details                   string           `json:"details,omitempty"`                   // Stringified JSON object containing resolutionSource, tags,
 	ScalarDenomination        string           `json:"scalarDenomination,omitempty"`        // Denomination used for the numerical range of a Scalar Market (e.g., dollars, degrees Fahrenheit, parts-per-billion).
-	DesignatedReporter        Address          `json:"designatedReporter,omitempty"`        // Ethereum address of the Market’s designated report, as a hexadecimal string.
+	DesignatedReporter        string           `json:"designatedReporter,omitempty"`        // Ethereum address of the Market’s designated report, as a hexadecimal string.
 	DesignatedReportStake     float32          `json:"designatedReportStake,omitempty"`     // Size of the Designated Reporter Stake, in attoETH, that the Designated Reporter must pay to submit the Designated Report for this Market.
 	ResolutionSource          string           `json:"resolutionSource,omitempty"`          // Reference source used to determine the Outcome of the Market event.
 	NumTicks                  int              `json:"numTicks,omitempty"`                  // Number of possible prices, or ticks, between a Market’s minimum price and maximum price.
@@ -155,7 +155,7 @@ type MarketRecord struct {
 	UpdatedAt                 time.Time        `json:"updatedAt" bson:"updatedAt"`
 }
 
-func (p *Market) SetBSON(raw bson.Raw) error {
+func (m *Market) SetBSON(raw bson.Raw) error {
 	decoded := &MarketRecord{}
 
 	err := raw.Unmarshal(decoded)
@@ -163,11 +163,119 @@ func (p *Market) SetBSON(raw bson.Raw) error {
 		return err
 	}
 
+	m.ID = decoded.ID
+	if IsHexAddress(decoded.MarketID) {
+		m.MarketID = HexToAddress(decoded.MarketID)
+	}
+	if IsHexAddress(decoded.Universe) {
+		m.Universe = HexToAddress(decoded.Universe)
+	}
+	m.MarketType = decoded.MarketType
+	m.NumOutcomes = decoded.NumOutcomes
+	m.MinPrice = decoded.MinPrice
+	m.MaxPrice = decoded.MaxPrice
+	m.CumulativeScale = decoded.CumulativeScale
+	if IsHexAddress(decoded.Author) {
+		m.Author = HexToAddress(decoded.Author)
+	}
+	m.CreationTime = decoded.CreationTime
+	m.CreationBlock = decoded.CreationBlock
+	m.CreationFee = decoded.CreationFee
+	m.SettlementFee = decoded.SettlementFee
+	m.ReportingFeeRate = decoded.ReportingFeeRate
+	m.MarketCreatorFeeRate = decoded.MarketCreatorFeeRate
+	m.MarketCreatorFeesBalance = decoded.MarketCreatorFeesBalance
+	if IsHexAddress(decoded.MarketCreatorMailbox) {
+		m.MarketCreatorMailbox = HexToAddress(decoded.MarketCreatorMailbox)
+	}
+	if IsHexAddress(decoded.MarketCreatorMailboxOwner) {
+		m.MarketCreatorMailboxOwner = HexToAddress(decoded.MarketCreatorMailboxOwner)
+	}
+	m.InitialReportSize = decoded.InitialReportSize
+	m.Category = decoded.Category
+	m.Volume = decoded.Volume
+	m.Tags = decoded.Tags
+	m.OpenInterest = decoded.OpenInterest
+	m.OutstandingShares = decoded.OutstandingShares
+	m.ReportingState = decoded.ReportingState
+	m.Forking = decoded.Forking
+	m.NeedsMigration = decoded.NeedsMigration
+	if IsHexAddress(decoded.FeeWindow) {
+		m.FeeWindow = HexToAddress(decoded.FeeWindow)
+	}
+	m.EndTime = decoded.EndTime
+	m.FinalizationBlockNumber = decoded.FinalizationBlockNumber
+	m.FinalizationTime = decoded.FinalizationTime
+	m.LastTradeTime = decoded.LastTradeTime
+	m.LastTradeBlockNumber = decoded.LastTradeBlockNumber
+	m.Description = decoded.Description
+	m.Details = decoded.Details
+	m.ScalarDenomination = decoded.ScalarDenomination
+	if IsHexAddress(decoded.DesignatedReporter) {
+		m.DesignatedReporter = HexToAddress(decoded.DesignatedReporter)
+	}
+	m.DesignatedReportStake = decoded.DesignatedReportStake
+	m.ResolutionSource = decoded.ResolutionSource
+	m.NumTicks = decoded.NumTicks
+	m.TickSize = decoded.TickSize
+	m.Outcomes = decoded.Outcomes
+	m.Consensus = decoded.Consensus
+	m.CreatedAt = decoded.CreatedAt
+	m.UpdatedAt = decoded.UpdatedAt
+
 	return nil
 }
 
 func (m *Market) GetBSON() (interface{}, error) {
-	return m, nil
+	return &MarketRecord{
+		ID: m.ID,
+
+		MarketID:                  m.MarketID.Hex(),
+		Universe:                  m.Universe.Hex(),
+		MarketType:                m.MarketType,
+		NumOutcomes:               m.NumOutcomes,
+		MinPrice:                  m.MinPrice,
+		MaxPrice:                  m.MaxPrice,
+		CumulativeScale:           m.CumulativeScale,
+		Author:                    m.Author.Hex(),
+		CreationTime:              m.CreationTime,
+		CreationBlock:             m.CreationBlock,
+		CreationFee:               m.CreationFee,
+		SettlementFee:             m.SettlementFee,
+		ReportingFeeRate:          m.ReportingFeeRate,
+		MarketCreatorFeeRate:      m.MarketCreatorFeeRate,
+		MarketCreatorFeesBalance:  m.MarketCreatorFeesBalance,
+		MarketCreatorMailbox:      m.MarketCreatorMailbox.Hex(),
+		MarketCreatorMailboxOwner: m.MarketCreatorMailboxOwner.Hex(),
+		InitialReportSize:         m.InitialReportSize,
+		Category:                  m.Category,
+		Volume:                    m.Volume,
+		Tags:                      m.Tags,
+		OpenInterest:              m.OpenInterest,
+		OutstandingShares:         m.OutstandingShares,
+		ReportingState:            m.ReportingState,
+		Forking:                   m.Forking,
+		FeeWindow:                 m.FeeWindow.Hex(),
+		EndTime:                   m.EndTime,
+		FinalizationBlockNumber:   m.FinalizationBlockNumber,
+		FinalizationTime:          m.FinalizationTime,
+		LastTradeTime:             m.LastTradeTime,
+		LastTradeBlockNumber:      m.LastTradeBlockNumber,
+		Details:                   m.Details,
+		Description:               m.Description,
+		ScalarDenomination:        m.ScalarDenomination,
+		DesignatedReporter:        m.DesignatedReporter.Hex(),
+		DesignatedReportStake:     m.DesignatedReportStake,
+		ResolutionSource:          m.ResolutionSource,
+		NumTicks:                  m.NumTicks,
+		TickSize:                  m.TickSize,
+		DisputeRounds:             m.DisputeRounds,
+		Consensus:                 m.Consensus,
+		Outcomes:                  m.Outcomes,
+
+		CreatedAt: m.CreatedAt,
+		UpdatedAt: m.UpdatedAt,
+	}, nil
 }
 
 // Validate function is used to verify if an instance of

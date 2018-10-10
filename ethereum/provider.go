@@ -5,12 +5,13 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/andyvauliln/prediction-markets-api/app"
-	"github.com/andyvauliln/prediction-markets-api/interfaces"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	eth "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/shambala/shambala-api/app"
+	"github.com/shambala/shambala-api/interfaces"
 )
 
 type EthereumProvider struct {
@@ -113,5 +114,22 @@ func (e *EthereumProvider) GetPendingNonceAt(a common.Address) (uint64, error) {
 	}
 
 	return nonce, nil
+}
+
+func (e *EthereumProvider) BalanceOf(owner common.Address, token common.Address) (*big.Int, error) {
+	tokenInterface, err := contractsinterfaces.NewToken(token, e.Client)
+	if err != nil {
+		logger.Error(err)
+		return nil, err
+	}
+
+	opts := &bind.CallOpts{Pending: true}
+	b, err := tokenInterface.BalanceOf(opts, owner)
+	if err != nil {
+		logger.Error(err)
+		return nil, err
+	}
+
+	return b, nil
 }
 
